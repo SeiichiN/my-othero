@@ -1,0 +1,29 @@
+// Koma.java
+
+public class Koma  {
+    // 盤面状態 黒B、白W、空E
+    private String state;
+    private int x;
+    private int y;
+
+    public Koma (int x, int y) {
+        this.state = ".";
+        this.x = x;
+        this.y = y;
+    }
+
+    public String getState () {
+        return this.state;
+    }
+
+    public void setState( String state ) {
+        this.state = state;
+    }
+
+    public int[] getPosition () {
+        int[] pos = { this.x, this.y };
+        return pos;
+    }
+}
+
+// 修正時刻： Thu Jul 16 09:39:42 2020
