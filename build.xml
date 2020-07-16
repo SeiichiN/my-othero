@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<project name="myOthello" default="compile" basedir=".">
+  <property name="src.dir" value="./src" />
+  <property name="dest.dir" value="./classes" />
+  <property name="build.dir" value="./classes" />
+
+  <target name="compile" depends="make_build.dir">
+    <javac includeAntRuntime="false"
+           encoding="UTF-8"
+           srcdir="${src.dir}"
+           destdir="${dest.dir}"
+           />
+  </target>
+
+  <target name="make_build.dir">
+    <mkdir dir="${build.dir}" />
+  </target>
+
+  <target name="clean">
+    <delete dir="${build.dir}" />
+  </target>
+</project>
+
+<!-- 修正時刻: Fri Jul 17 07:47:44 2020 -->
