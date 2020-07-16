@@ -1,0 +1,2 @@
+# my-othero
+othero game
