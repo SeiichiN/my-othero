@@ -71,12 +71,15 @@ public class Field {
 
     // 盤面に着手する手を検討する
     public boolean move (int x, int y, String state) {
-        
+        return false;
     }
 
     public boolean canMove (int x, int y, String state) {
         Koma koma = this.getKoma( x, y + 1);
-        
+        if (koma.getState() != "." && koma.getState() != state) {
+            System.out.println("OK");
+        }
+        return true;
     }
     
     
@@ -84,4 +87,4 @@ public class Field {
 
 
 
-// 修正時刻: Fri Jul 17 09:58:24 2020
+// 修正時刻: Fri Jul 17 13:31:25 2020
