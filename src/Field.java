@@ -70,28 +70,28 @@ public class Field {
     }
 
     // 盤面に着手する手を検討する
-    public boolean move (int x, int y, String state) {
-        boolean able = false;
-        int[] p = {0, 0};
+    public ArrayList<Direction> move (int x, int y, String state) {
+        ArrayList<Direction> moveList = new ArrayList <> ();
+        Direction direction = new Direction();
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
-                p[0] = i;
-                p[1] = j;
+                direction.setX(i);
+                direction.setY(j);
                 if (i == 0 && j == 0) { continue; }
-                if (canMove( p, x, y, state)) {
+                if (canMove( direction, x, y, state)) {
                     System.out.println("TRUE");
-                    able = true;
+                    moveList.add(direction);
                 } else {
                     System.out.println("FALSE");
                 }
                     
             }
         }
-        return able;
+        return moveList;
     }
 
-    public boolean canMove (int[] p, int x, int y, String state) {
-        Koma koma = this.getKoma( x + p[0], y + p[1]);
+    public boolean canMove (Direction p, int x, int y, String state) {
+        Koma koma = this.getKoma( x + p.getX(), y + p.getY());
         if (koma.getState() == ".") {
             return false;
         }
@@ -99,9 +99,9 @@ public class Field {
             return false;
         }
         while (koma.getState() != state) {
-            x = x + p[0];
-            y = y + p[1];
-            koma = this.getKoma( x + p[0], y + p[1] );
+            x = x + p.getX();
+            y = y + p.getY();
+            koma = this.getKoma( x + p.getX(), y + p.getY() );
             if (koma.getState() == state) {
                 return true;
             }
@@ -114,4 +114,4 @@ public class Field {
 
 
 
-// 修正時刻: Fri Jul 17 21:23:57 2020
+// 修正時刻: Sat Jul 18 08:22:31 2020
