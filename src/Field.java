@@ -76,10 +76,20 @@ public class Field {
 
     public boolean canMove (int x, int y, String state) {
         Koma koma = this.getKoma( x, y + 1);
-        if (koma.getState() != "." && koma.getState() != state) {
-            System.out.println("OK");
+        if (koma.getState() == ".") {
+            return false;
         }
-        return true;
+        if (koma.getState() == state) {
+            return false;
+        }
+        while (koma.getState() != state) {
+            y++;
+            koma = this.getKoma( x, y + 1 );
+            if (koma.getState() == state) {
+                return true;
+            }
+        }
+        return false;
     }
     
     
@@ -87,4 +97,4 @@ public class Field {
 
 
 
-// 修正時刻: Fri Jul 17 13:31:25 2020
+// 修正時刻: Fri Jul 17 16:25:27 2020

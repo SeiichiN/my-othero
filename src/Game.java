@@ -8,11 +8,15 @@ public class Game {
         field.putKoma( 2, 3, "W" );
         field.putKoma( 3, 2, "W" );
         field.putKoma( 3, 3, "B" );
-        field.canMove( 3, 1, "B" );
+        if (field.canMove( 4, 1, "B" )) {
+            System.out.println("OK");
+        } else {
+            System.out.println("NG");
+        }
         field.feature();
     }
 }
 
 
 
-// 修正時刻: Fri Jul 17 13:34:17 2020
+// 修正時刻: Fri Jul 17 16:33:39 2020
