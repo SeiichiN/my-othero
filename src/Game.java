@@ -8,7 +8,8 @@ public class Game {
         field.putKoma( 2, 3, "W" );
         field.putKoma( 3, 2, "W" );
         field.putKoma( 3, 3, "B" );
-        if (field.canMove( 4, 1, "B" )) {
+        field.putKoma( 3, 1, "W" );
+        if (field.move(3, 0, "B" )) {
             System.out.println("OK");
         } else {
             System.out.println("NG");
@@ -19,4 +20,4 @@ public class Game {
 
 
 
-// 修正時刻: Fri Jul 17 16:33:39 2020
+// 修正時刻: Fri Jul 17 21:11:43 2020
