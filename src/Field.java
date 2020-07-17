@@ -68,8 +68,20 @@ public class Field {
             System.out.println("\n");
         }
     }
+
+    // 盤面に着手する手を検討する
+    public boolean move (int x, int y, String state) {
+        
+    }
+
+    public boolean canMove (int x, int y, String state) {
+        Koma koma = this.getKoma( x, y + 1);
+        
+    }
+    
+    
 }
 
 
 
-// 修正時刻: Thu Jul 16 21:48:58 2020
+// 修正時刻: Fri Jul 17 09:58:24 2020
