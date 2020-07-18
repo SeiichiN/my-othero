@@ -72,17 +72,16 @@ public class Field {
     // 盤面に着手する手を検討する
     public ArrayList<Direction> move (int x, int y, String state) {
         ArrayList<Direction> moveList = new ArrayList <> ();
-        Direction direction = new Direction();
+        Direction direction;
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
-                direction.setX(i);
-                direction.setY(j);
                 if (i == 0 && j == 0) { continue; }
+                direction = new Direction( i, j );
                 if (canMove( direction, x, y, state)) {
-                    System.out.println("TRUE");
+                    System.out.println( direction.getX() + ":" + direction.getY() + " TRUE");
                     moveList.add(direction);
                 } else {
-                    System.out.println("FALSE");
+                    System.out.println( direction.getX() + ":" + direction.getY() + " FALSE");
                 }
                     
             }
@@ -91,19 +90,38 @@ public class Field {
     }
 
     public boolean canMove (Direction p, int x, int y, String state) {
-        Koma koma = this.getKoma( x + p.getX(), y + p.getY());
-        if (koma.getState() == ".") {
+        int considerX = x + p.getX();
+        int considerY = y + p.getY();
+        if (considerX < 0 || considerY < 0) { return false; }
+        if (considerX >= this.xnum || considerY >= this.ynum) { return false; }
+        Koma koma = this.getKoma( considerX, considerY);
+        int pos[] = koma.getPosition();
+        System.out.println("x:" + pos[0] +
+                           " y:" + pos[1] +
+                           " " + koma.getState() +
+                           " my:" + state);
+        if (koma.getState().equals(".")) {
             return false;
         }
-        if (koma.getState() == state) {
+        if (koma.getState().equals(state)) {
             return false;
         }
-        while (koma.getState() != state) {
-            x = x + p.getX();
-            y = y + p.getY();
-            koma = this.getKoma( x + p.getX(), y + p.getY() );
-            if (koma.getState() == state) {
+        while (! koma.getState().equals(state)) {
+            considerX += p.getX();
+            considerY += p.getY();
+            if (considerX < 0 || considerY < 0) { return false; }
+            if (considerX >= this.xnum  || considerY >= this.ynum ) { return false; }
+            koma = this.getKoma( considerX, considerY );
+            pos = koma.getPosition();
+            System.out.println("x:" + pos[0] +
+                               " y:" + pos[1] +
+                               " " + koma.getState() +
+                               " my:" + state);
+            if (koma.getState().equals(state)) {
                 return true;
+            }
+            if (koma.getState().equals(".")) {
+                return false;
             }
         }
         return false;
@@ -114,4 +132,4 @@ public class Field {
 
 
 
-// 修正時刻: Sat Jul 18 08:22:31 2020
+// 修正時刻: Sat Jul 18 20:38:12 2020
