@@ -14,6 +14,7 @@
 
   <target name="make_build.dir">
     <mkdir dir="${build.dir}" />
+    <copy file="${src.dir}/game.conf" todir="${dest.dir}" />
   </target>
 
   <target name="clean">
@@ -21,4 +22,4 @@
   </target>
 </project>
 
-<!-- 修正時刻: Fri Jul 17 07:47:44 2020 -->
+<!-- 修正時刻: Sun Jul 19 09:59:22 2020 -->

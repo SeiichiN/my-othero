@@ -26,6 +26,7 @@ public class GetConf {
 
             String line = null;
             while ((line = reader.readLine()) != null) {
+                if (line == "\n" || line == "\r\n") { break; }
                 addMap(line);
             }
         } catch (FileNotFoundException fe) {

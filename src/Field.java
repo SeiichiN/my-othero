@@ -70,20 +70,52 @@ public class Field {
             System.out.println("\n");
         }
     }
-	
+
+    /**
+     * 着手チェック
+     *   盤上にあるか？
+     *   すでにコマが置かれていないか？
+     * @param:
+     *   Action action -- x, y, player
+     * @return:
+     *   boolean
+     */
+    public boolean checkAction ( Action action ) {
+        int x = action.getX();
+        int y = action.getY();
+        if (x < 0 || x > this.xnum) { return false; }
+        if (y < 0 || y > this.ynum) { return false; }
+        Koma koma = this.getKoma( x, y );
+        if (koma.getState().equals("B") || koma.getState().equals("W")) {
+            return false;
+        }
+        return true;
+    }
+
+    
+    /**
+     * 着手したあと、挟んだ敵コマを裏返すための処理
+     */
 	public void afterAction ( Action action ) {
-        Direction direction;
+        Direction direction = new Direction();
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
                 if (i == 0 && j == 0) { continue; }
-                direction = new Direction( i, j );
-                int countEnemy = canMove( direction, action );
+                direction.setX( i );
+                direction.setY( j );
+                // 着手できるかどうかを canMove でチェック
+                // 正の数なら挟める(裏返せる)
+                if (canMove( direction, action ) > 0) {
+                    int countEnemy = flipOver( direction, action );
+                }
             }
         }
 	}
 
     /**
      * flipOver -- 敵のコマを裏返す
+     *          canMoveメソッドで盤上のチェックはすませているので、
+     *          ここではチェックしない。
      * @param:
      *   Direction p -- 相手のコマをはさめるかを検討するための方向を表す
      *                現地点が(0,0)で、北西が(-1,-1)、南東が(1, 1)
@@ -97,18 +129,15 @@ public class Field {
      */
     public int flipOver (Direction p, Action action) {
 		String state = action.getPlayer();
-        // 挟める敵コマの数
-        int countEnemy = 0;
+        // 裏返したコマの数
+        int countFlipOver = 0;
         // 検討する方向の、まず一番近い地点の x, y を得る。
         int considerX = action.getX() + p.getX();
         int considerY = action.getY() + p.getY();
-        // その x, y が、盤上にあるかどうかをチェックする。
-        if (considerX < 0 || considerY < 0) { return 0; }
-        // this.xnum、this.ynum は、盤の大きさである。
-        // かりに this.xnum, this.ynum が 6 だと、0...5 が盤の大きさ。
-        if (considerX >= this.xnum || considerY >= this.ynum) { return 0; }
+
         // その検討方向のコマ情報を得る。
         Koma koma = this.getKoma( considerX, considerY);
+
         // デバッグ用 -- その方向の x座標、y座標を表示する。
         if (DEBUG) {
             int[] pos = koma.getPosition();
@@ -117,27 +146,18 @@ public class Field {
                                " " + koma.getState() +
                                " my:" + state);
         }
-        // もしその方向のコマが "." なら、0 を返す
-        if (koma.getState().equals(".")) {
-            return 0;
-        }
-        // もしその方向のコマが味方のコマなら、裏返せない。
-        if (koma.getState().equals( state )) {
-            return 0;
-        }
+
         // "." でもなく、味方のコマでもないならば、敵のコマなので、その方向には
         // どれだけの敵のコマがあるのか、また、敵のコマのその向こうに味方のコマ
         // があって、敵のコマを挟める状態であるかを調べる。
         while (! koma.getState().equals( state )) {
-            // 挟める敵コマがあったので、そのコマを裏返す。
+            // 敵コマがあったので、そのコマを裏返す。
 			koma.setState( state );
-            countEnemy++;
+            countFlipOver++;
             // その方向にさらに1つ進める
             considerX += p.getX();
             considerY += p.getY();
-            // 盤上にあるかをチェック
-            if (considerX < 0 || considerY < 0) { return 0; }
-            if (considerX >= this.xnum  || considerY >= this.ynum ) { return 0; }
+
             // その地点のコマ情報を得る。
             koma = this.getKoma( considerX, considerY );
             // デバッグ用 -- その地点の x座標、y座標を表示する。
@@ -148,17 +168,12 @@ public class Field {
                                    " " + koma.getState() +
                                    " my:" + state );
             }
-            // その地点に味方のコマがあれば、挟めるので、着手可能。
+            // その地点に味方のコマがあれば、終了
             if (koma.getState().equals(state)) {
-                return countEnemy;
-            }
-            // その地点が "." なら、味方のコマがいないので、挟めない。
-            // 着手できない。
-            if (koma.getState().equals(".")) {
-                return 0;
+                break;
             }
         }
-        return 0;
+        return countFlipOver;
     }
 
 

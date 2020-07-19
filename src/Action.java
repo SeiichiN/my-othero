@@ -1,9 +1,12 @@
 // Action.java
 
+/**
+ * Actionクラス -- Cの構造体のように使うためのクラス
+ */
 public class Action {
-    private int x;
-    private int y;
-    private String player;
+    private int x = 0;
+    private int y = 0;
+    private String player = "?";
 
     public Action () {}
     public Action ( int x, int y, String player ) {
@@ -20,4 +23,7 @@ public class Action {
     public void setY (int y) { this.y = y; }
     public void setPlayer (String player) { this.player = player; }
 }
+
+
+// 修正時刻: Sun Jul 19 16:59:33 2020
 

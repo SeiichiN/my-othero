@@ -14,8 +14,10 @@ public class Game {
         Field field = new Field( COL, ROW );
         field.prepare();
 
-        Action action;
-		action = new Action( 2, 2, "B" );
+        Action action = new Action();
+        action.setX(2);
+        action.setY(2);
+        action.setPlayer("B");
         field.putKoma( action );
 		action.setX(2);
 		action.setY(3);
@@ -37,11 +39,12 @@ public class Game {
             field.putKoma( action );
 			field.afterAction( action );
             field.feature();
+            String next = (action.getPlayer().equals("B")) ? "W" : "B";
+            System.out.println("次の手番は " + next + " です。");
         }
     }
 }
 
 
 
-// 修正時刻: Sun Jul 19 06:25:48 2020
-
+// 修正時刻: Sun Jul 19 18:08:34 2020
