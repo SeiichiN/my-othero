@@ -1,17 +1,25 @@
 // Human.java
 
+import java.util.ArrayList;
+
 import util.GetUserInput;
-import util.GetConf;
 
 public class Human {
-    Map<String, String> mapList = new GetConf("game.conf").load();
-    final int COL = Integer.parseInt( mapList.get("col") );
-    final int ROW = Integer.parseInt( mapList.get("row") );
-    Field field = new Field( COL, ROW );
-    field.prepare();
-
+    public Human () {}
     
+    public void selectMove (Field field) {
+        ArrayList<Direction> DirectionList = new ArrayList <> ();
+        String strX = GetUserInput.get("x> ");
+        String strY = GetUserInput.get("y> ");
+        String userState = GetUserInput.get("B / W> ").toUpperCase();
+        int userX = Integer.parseInt( strX );
+        int userY = Integer.parseInt( strY );
+        DirectionList = field.move( userX, userY, userState );
+        DirectionList.forEach( ele -> {
+                System.out.println(ele.getX() + ":" + ele.getY() + ":" + ele.getPoint());
+            });
+    }
 }
 
+// 修正時刻: Sun Jul 19 07:14:21 2020
 
-// 修正時刻: Sat Jul 18 21:29:02 2020
