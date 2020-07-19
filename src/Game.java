@@ -13,13 +13,31 @@ public class Game {
         final int ROW = Integer.parseInt( mapList.get("row") );
         Field field = new Field( COL, ROW );
         field.prepare();
-        field.putKoma( 2, 2, "B" );
-        field.putKoma( 2, 3, "W" );
-        field.putKoma( 3, 2, "W" );
-        field.putKoma( 3, 3, "B" );
+
+        Action action;
+		action = new Action( 2, 2, "B" );
+        field.putKoma( action );
+		action.setX(2);
+		action.setY(3);
+		action.setPlayer("W");
+        field.putKoma( action );
+		action.setX(3);
+		action.setY(2);
+		action.setPlayer("W");
+        field.putKoma( action );
+		action.setX(3);
+		action.setY(3);
+		action.setPlayer("B");
+        field.putKoma( action );
         field.feature();
         Human human = new Human();
-        human.selectMove( field );
+
+        while (true) {
+            action = human.selectMove( field );
+            field.putKoma( action );
+			field.afterAction( action );
+            field.feature();
+        }
     }
 }
 

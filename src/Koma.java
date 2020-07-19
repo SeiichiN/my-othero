@@ -6,9 +6,9 @@
  */
 public class Koma  {
     // 盤面状態 黒B、白W、空.
-    private String state;  // B : W : .
-    private int x;     // ヨコ
-    private int y;     // タテ
+    private static String state;  // B : W : .
+    private static int x;     // ヨコ
+    private static int y;     // タテ
 
     // コンストラクタ -- 初期状態
     public Koma (int x, int y) {
