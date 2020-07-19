@@ -22,6 +22,9 @@ public class Field {
         this.ynum = ynum;
     }
 
+    public int getXnum () { return this.xnum; }
+    public int getYnum () { return this.ynum; }
+
     // prepare -- 準備する
     // 盤面をタテynum、ヨコxnumの大きさで用意する。
     // また、各マスを . で埋めて、komalistに加える。
