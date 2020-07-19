@@ -3,6 +3,9 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 盤面に関する情報と操作
+ */
 public class Field {
     // Koma型のリスト
     private List<Koma> komalist;
@@ -284,4 +287,3 @@ public class Field {
 }
 
 // 修正時刻: Sun Jul 19 08:50:45 2020
-
