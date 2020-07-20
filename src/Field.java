@@ -207,13 +207,17 @@ public class Field {
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
                 if (i == 0 && j == 0) { continue; }
-                System.out.println( "x:" + action.getX() + " y:" + action.getY() + " " + action.getPlayer() );
+                if (DEBUG) {
+                    System.out.println( "x:" + action.getX() + " y:" + action.getY() + " " + action.getPlayer() );
+                }
                 direction = new Direction( i, j );
                 countEnemy = canMove( direction, action );
                 if (countEnemy > 0) {
-                    System.out.println("i:" + i + " j:" + j);
-                    System.out.println( "dirx:" + direction.getX() + " diry:" + direction.getY());
-                    System.out.println("countEnemy:" + countEnemy);
+                    if (DEBUG) {
+                        System.out.println("i:" + i + " j:" + j);
+                        System.out.println( "dirx:" + direction.getX() + " diry:" + direction.getY());
+                        System.out.println("countEnemy:" + countEnemy);
+                    }
                     direction.setPoint( countEnemy );
                     directionList.add( direction );
                 }
@@ -224,7 +228,9 @@ public class Field {
                     
             }
         }
-        System.out.println(directionList.size());
+        if (DEBUG) {
+            System.out.println(directionList.size());
+        }
         return directionList;
     }
 
@@ -308,6 +314,53 @@ public class Field {
         }
         return 0;
     }
+
+    /**
+     * 終局判定
+     * 全てのコマが B か W で埋まっていたら得点を計算する
+     * 一つでも埋まっていないコマがあれば、判定をやめる
+     * @return:
+     *   boolean
+     */
+    public boolean isEndOfGame () {
+        boolean endOfGame = false;
+        for (int i = 0; i < this.xnum; i++) {
+            for (int j = 0; j < this.ynum; j++) {
+                Koma koma = getKoma( i, j );
+                if (koma.getState().equals("B") ||
+                    koma.getState().equals("W")) {
+                    endOfGame = true;
+                } else {
+                    endOfGame = false;
+                }
+            }
+        }
+        return endOfGame;
+    }
+    /**
+     * 得点計算
+     * 得点を計算する
+     * @return:
+     *   Score score -- B と W の得点を保持するクラス
+     */
+    public Score getScore () {
+        Score score = new Score();
+        for (int i = 0; i < this.xnum; i++) {
+            for (int j = 0; j < this.ynum; j++) {
+                Koma koma = getKoma( i, j );
+                if (koma.getState().equals("B")) {
+                    score.plusB();
+                } else if (koma.getState().equals("W")) {
+                    score.plusW();
+                } else {
+                    ;
+                }
+            }
+        }
+        return score;
+    }
+
+
 }
 
 // 修正時刻: Mon Jul 20 13:17:48 2020

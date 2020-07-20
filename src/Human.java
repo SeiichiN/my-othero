@@ -15,7 +15,7 @@ public class Human {
 
         while (! check) {
             String query =
-                GetUserInput.get("x座標 y座標 B/W の順で記述。ex.'32B'\nパス:B/W EXIT:999");
+                GetUserInput.get("x座標 y座標 B/W の順で記述。ex.'32b'\nパス:B/W EXIT:999> ");
 
             if (query.equals("999")) { System.exit(1); }
             if (query.equals("b") || query.equals("B") || query.equals("w") || query.equals("W")) {
