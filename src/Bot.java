@@ -19,7 +19,7 @@ public class Bot {
         boolean check = false;
         int valueOfAction = 0;
         int maxValue = 0;
-        Action bestAction = null;
+        Action bestAction = new Action();
         Action action = null;
 
         // 盤面のすべての地点を捜査する。

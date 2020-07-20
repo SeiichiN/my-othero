@@ -38,7 +38,7 @@ public class Game {
 		action.setY(3);
 		action.setPlayer("B");
         field.putKoma( action );
-        clearConsole();
+        ConsoleControl.clearConsole();
         field.feature();
         System.out.println("次の手番は B です。");
         next = "B";
@@ -54,14 +54,14 @@ public class Game {
                 field.putKoma( action );
                 field.afterAction( action );
             }
-            clearConsole();
+            ConsoleControl.clearConsole();
             field.feature();
             next = (action.getPlayer().equals("B")) ? "W" : "B";
             System.out.println("次の手番は " + next + " です。");
 
             // Bot
             action = bot.selectMove( field, next );
-            if (action.getX() == 0 && action.getY() == -1) {
+            if (action.getX() == -1 && action.getY() == -1) {
                 if (field.isEndOfGame()) {
                     isEnd = true;
                     break;
@@ -71,7 +71,7 @@ public class Game {
                 field.putKoma( action );
                 field.afterAction( action );
             }
-            clearConsole();
+            ConsoleControl.clearConsole();
             field.feature();
             next = (action.getPlayer().equals("B")) ? "W" : "B";
             System.out.println("次の手番は " + next + " です。");
@@ -82,26 +82,6 @@ public class Game {
             System.out.println("ゲーム終了 得点 B:" + score.getB() + " W:" + score.getW());
         }
     }
-
-    /**
-     * 画面クリア
-     */
-    static void clearConsole() {
-        try {
-            ConsoleControl cc = null;
-            PlatformUtils pu = new PlatformUtils();
-            if (pu.isLinux()) {
-                cc = new ConsoleControl("/bin/bash", "-c", "clear");  // for Linux
-            } else if (pu.isWindows()) {
-                cc = new ConsoleControl("cmd", "/c", "cls");   // for Win
-            }
-            cc.cls();
-        } catch (IOException ie) {
-            ie.printStackTrace();
-        } catch (InterruptedException re) {
-            re.printStackTrace();
-        }
-    }    
 }
 
 

@@ -11,6 +11,13 @@ package util;
 
 import java.io.IOException;
 
+/**
+ * 使い方:
+ *   このクラスを import して、任意の場所で
+ *     ConsoleControl.clearConsole();
+ *   とすればよい。
+ *   PlatformUtils.java が必要。
+ */
 public class ConsoleControl {
     private ProcessBuilder pb;
 
@@ -38,4 +45,25 @@ public class ConsoleControl {
          * pro.waitFor();
          */
     }
+
+    /**
+     * 画面クリア
+     */
+    public static void clearConsole() {
+        try {
+            ConsoleControl cc = null;
+            PlatformUtils pu = new PlatformUtils();
+            if (pu.isLinux()) {
+                cc = new ConsoleControl("/bin/bash", "-c", "clear");  // for Linux
+            } else if (pu.isWindows()) {
+                cc = new ConsoleControl("cmd", "/c", "cls");   // for Win
+            }
+            cc.cls();
+        } catch (IOException ie) {
+            ie.printStackTrace();
+        } catch (InterruptedException re) {
+            re.printStackTrace();
+        }
+    }    
+
 }

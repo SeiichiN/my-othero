@@ -65,6 +65,7 @@ public class Field {
             String state = koma.getState();
             board[pos[1]][pos[0]] = state;
         }
+        System.out.println("\n\t\t-----< OTHELLO >-----");
         System.out.println("\n\t0\t1\t2\t3\t4\t5\n");
 
         for (int y = 0; y < board.length; y++) {
