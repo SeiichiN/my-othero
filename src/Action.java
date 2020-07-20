@@ -9,6 +9,10 @@ public class Action {
     private String player = "?";
 
     public Action () {}
+    public Action ( int x, int y ) {
+        this.x = x;
+        this.y = y;
+    }
     public Action ( int x, int y, String player ) {
         this.x = x;
         this.y = y;
@@ -25,5 +29,5 @@ public class Action {
 }
 
 
-// 修正時刻: Sun Jul 19 16:59:33 2020
+// 修正時刻: Mon Jul 20 16:35:48 2020
 

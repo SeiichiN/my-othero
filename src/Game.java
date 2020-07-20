@@ -11,10 +11,16 @@ public class Game {
         Map<String, String> mapList = new GetConf("game.conf").load();
         final int COL = Integer.parseInt( mapList.get("col") );
         final int ROW = Integer.parseInt( mapList.get("row") );
+
+        Human human = new Human();
+        Bot bot = new Bot();
+        Action action = new Action();
+        String next;
+        
         Field field = new Field( COL, ROW );
+
         field.prepare();
 
-        Action action = new Action();
         action.setX(2);
         action.setY(2);
         action.setPlayer("B");
@@ -32,14 +38,23 @@ public class Game {
 		action.setPlayer("B");
         field.putKoma( action );
         field.feature();
-        Human human = new Human();
+        System.out.println("次の手番は B です。");
 
         while (true) {
             action = human.selectMove( field );
             field.putKoma( action );
 			field.afterAction( action );
             field.feature();
-            String next = (action.getPlayer().equals("B")) ? "W" : "B";
+            next = (action.getPlayer().equals("B")) ? "W" : "B";
+            System.out.println("次の手番は " + next + " です。");
+
+            // Bot
+            action = bot.selectMove( field );
+            System.out.println("action.getPlayer()" + action.getPlayer());
+            field.putKoma( action );
+            field.afterAction( action );
+            field.feature();
+            next = (action.getPlayer().equals("B")) ? "W" : "B";
             System.out.println("次の手番は " + next + " です。");
         }
     }
@@ -47,4 +62,4 @@ public class Game {
 
 
 
-// 修正時刻: Sun Jul 19 18:08:34 2020
+// 修正時刻: Mon Jul 20 15:13:18 2020

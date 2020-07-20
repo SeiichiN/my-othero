@@ -184,8 +184,20 @@ public class Field {
 
 
 
-
-    // 盤面に着手する手を検討する
+    /**
+     * 盤面に着手する手を検討する
+     * @param:
+     *   Action action -- int x, int y, String player
+     *             この場合の x, y は、着手した地点の座標を
+     *             あらわす。
+     * @return:
+     *   ArrayList<Direction> directionList --
+     *             Direction -- int x, int y, int point
+     *   着手する地点を (0, 0) として、八方向に敵コマを検索し
+     *   その向こうに味方のコマがあれば、挟める。
+     *   挟めた敵コマの数を point、その方向を x, y として保持
+     *   する。
+     */
     public ArrayList<Direction> move (Action action) {
         ArrayList<Direction> directionList = new ArrayList <> ();
         Direction direction;
@@ -289,4 +301,4 @@ public class Field {
     }
 }
 
-// 修正時刻: Sun Jul 19 08:50:45 2020
+// 修正時刻: Mon Jul 20 13:17:48 2020
