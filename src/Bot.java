@@ -6,7 +6,13 @@ import java.util.List;
 public class Bot {
     public Bot () {}
 
-    public Action selectMove ( Field field ) {
+    /**
+     * Bot用selectMove -- 着手を選択する
+     * @param:
+     *   Field field -- 盤情報とメソッド
+     *   String next -- 次の手番( 黒 / 白 )
+     */
+    public Action selectMove ( Field field, String next ) {
         ArrayList <Direction> directionList = new ArrayList <> ();
         List <Action> actionList = new ArrayList <> ();
 
@@ -22,7 +28,7 @@ public class Bot {
         // その結果を actionList に格納する。
         for (int i = 0; i < field.getXnum(); i++) {
             for (int j = 0; j < field.getYnum(); j++) {
-                action = new Action( i, j );
+                action = new Action( i, j, next );
                 check = field.checkAction( action );
                 // 空のコマをリストに入れる
                 if (check) {
@@ -41,18 +47,26 @@ public class Bot {
         for ( Action ele : actionList ) {
             // System.out.println( "x:" + ele.getX() + " y:" + ele.getY() );
             directionList = field.move( ele );
-            for ( Direction dir : directionList ) {
-                System.out.println( dir.getPoint() );
-                if (dir.getPoint() > 0) {
-                    valueOfAction = dir.getPoint();
-                }
-                if (maxValue < valueOfAction) {
-                    maxValue = valueOfAction;
-                    bestAction = ele;
+            if (directionList != null) {
+                for ( Direction dir : directionList ) {
+                    System.out.println( dir.getPoint() );
+                    if (dir.getPoint() > 0) {
+                        valueOfAction = dir.getPoint();
+                    }
+                    if (maxValue < valueOfAction) {
+                        maxValue = valueOfAction;
+                        bestAction = ele;
+                    }
                 }
             }
         }
-''
+        // 打つ場所がないと maxValue は 0 になる
+        // この場合は パス とする
+        if (maxValue == 0) {
+            bestAction.setX( -1 );
+            bestAction.setY( -1 );
+            bestAction.setPlayer( next );
+        }
         return bestAction;
     }
 }

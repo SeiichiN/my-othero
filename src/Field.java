@@ -201,21 +201,30 @@ public class Field {
     public ArrayList<Direction> move (Action action) {
         ArrayList<Direction> directionList = new ArrayList <> ();
         Direction direction;
+        // directionList = null;
+        int countEnemy = 0;
+        
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
                 if (i == 0 && j == 0) { continue; }
+                System.out.println( "x:" + action.getX() + " y:" + action.getY() + " " + action.getPlayer() );
                 direction = new Direction( i, j );
-                int countEnemy = canMove( direction, action );
+                countEnemy = canMove( direction, action );
                 if (countEnemy > 0) {
-                    // System.out.println( direction.getX() + ":" + direction.getY() + " TRUE");
+                    System.out.println("i:" + i + " j:" + j);
+                    System.out.println( "dirx:" + direction.getX() + " diry:" + direction.getY());
+                    System.out.println("countEnemy:" + countEnemy);
                     direction.setPoint( countEnemy );
-                    directionList.add(direction);
-                } else {
-                    // System.out.println( direction.getX() + ":" + direction.getY() + " FALSE");
+                    directionList.add( direction );
                 }
+
+                // else {
+                //     // System.out.println( direction.getX() + ":" + direction.getY() + " FALSE");
+                // }
                     
             }
         }
+        System.out.println(directionList.size());
         return directionList;
     }
 
@@ -302,3 +311,4 @@ public class Field {
 }
 
 // 修正時刻: Mon Jul 20 13:17:48 2020
+

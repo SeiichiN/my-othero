@@ -8,9 +8,9 @@
  * また、その方向にある敵コマの数を point として保持する。
  */
 public class Direction {
-    private int x;
-    private int y;
-    private int point;
+    private int x = 0;
+    private int y = 0;
+    private int point = 0;
 
     public Direction () {};
     public Direction (int x, int y) {
@@ -32,3 +32,5 @@ public class Direction {
 }
 
 // 修正時刻: Sun Jul 19 09:14:13 2020
+
+

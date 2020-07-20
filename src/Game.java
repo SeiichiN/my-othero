@@ -39,20 +39,29 @@ public class Game {
         field.putKoma( action );
         field.feature();
         System.out.println("次の手番は B です。");
+        next = "B";
 
         while (true) {
             action = human.selectMove( field );
-            field.putKoma( action );
-			field.afterAction( action );
+            if (action.getX() == -1 && action.getY() == -1) {
+                ;
+            } else {
+                field.putKoma( action );
+                field.afterAction( action );
+            }
             field.feature();
             next = (action.getPlayer().equals("B")) ? "W" : "B";
             System.out.println("次の手番は " + next + " です。");
 
             // Bot
-            action = bot.selectMove( field );
-            System.out.println("action.getPlayer()" + action.getPlayer());
-            field.putKoma( action );
-            field.afterAction( action );
+            action = bot.selectMove( field, next );
+            if (action.getX() == 0 && action.getY() == -1) {
+                ;
+            } else {
+                System.out.println("action.getPlayer()" + action.getPlayer());
+                field.putKoma( action );
+                field.afterAction( action );
+            }
             field.feature();
             next = (action.getPlayer().equals("B")) ? "W" : "B";
             System.out.println("次の手番は " + next + " です。");

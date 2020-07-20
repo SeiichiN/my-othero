@@ -14,9 +14,20 @@ public class Human {
         boolean check = false;
 
         while (! check) {
-            String strX = GetUserInput.get("x> ");
-            String strY = GetUserInput.get("y> ");
-            String userState = GetUserInput.get("B / W (EXIT:999)> ").toUpperCase();
+            String query =
+                GetUserInput.get("x座標 y座標 B/W の順で記述。ex.'32B'\nパス:B/W EXIT:999");
+
+            if (query.equals("999")) { System.exit(1); }
+            if (query.equals("b") || query.equals("B") || query.equals("w") || query.equals("W")) {
+                action.setX( -1 );
+                action.setY( -1 );
+                action.setPlayer( query );
+                break;
+            }
+            
+            String strX = query.substring( 0, 1 );
+            String strY = query.substring( 1, 2 );
+            String userState = query.substring( 2, 3 ).toUpperCase();
             int userX = Integer.parseInt( strX );
             int userY = Integer.parseInt( strY );
 
@@ -24,8 +35,6 @@ public class Human {
             action.setY( userY );
             action.setPlayer( userState );
 
-            if (action.getPlayer().equals("999")) { System.exit(1); }
-            
             // checkActionが通れば、checkは true となる。
             check = field.checkAction( action );
             if (! check) {
